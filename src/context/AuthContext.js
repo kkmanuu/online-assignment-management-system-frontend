@@ -22,7 +22,9 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, role, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, role, isAuthenticated, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -31,4 +33,4 @@ export const AuthProvider = ({ children }) => {
 // Custom hook for easier access
 export const useAuth = () => useContext(AuthContext);
 
-export default AuthContext; 
+export default AuthContext;
