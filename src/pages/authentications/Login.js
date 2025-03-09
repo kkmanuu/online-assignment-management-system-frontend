@@ -1,19 +1,52 @@
-import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import Link from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import {
+  Stack,
+  Button,
+  Typography,
+  TextField,
+  Container,
+  Paper,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+
+// Define textFieldStyles
+const textFieldStyles = {
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "gray",
+    },
+    "&:hover fieldset": {
+      borderColor: "#007bff",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#007bff",
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "gray",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#007bff",
+  },
+  input: {
+    color: "white",
+  },
+};
 
 const Login = () => {
+  const { login } = useAuth(); // Use the useAuth hook
   const [user, setUser] = useState({
     email: "",
     password: "",
+    role: "student",
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -21,7 +54,16 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+
+    console.log("User Logged In:", user);
+    login(user);
+
+    // Redirect to dashboard after successful login
+    if (user.role === "admin") {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/student-dashboard");
+    }
   };
 
   return (
@@ -51,10 +93,10 @@ const Login = () => {
             Login to your account
           </Typography>
           <Stack
-            onSubmit={handleSubmit}
             component="form"
             direction="column"
             spacing={2}
+            onSubmit={handleSubmit}
           >
             <TextField
               id="email"
@@ -66,15 +108,7 @@ const Login = () => {
               variant="outlined"
               fullWidth
               required
-              sx={{
-                input: { color: "white" },
-                label: { color: "gray" },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "gray" },
-                  "&:hover fieldset": { borderColor: "#4dabf5" },
-                  "&.Mui-focused fieldset": { borderColor: "#007bff" },
-                },
-              }}
+              sx={textFieldStyles}
             />
             <TextField
               id="password"
@@ -86,16 +120,25 @@ const Login = () => {
               variant="outlined"
               fullWidth
               required
-              sx={{
-                input: { color: "white" },
-                label: { color: "gray" },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "gray" },
-                  "&:hover fieldset": { borderColor: "#4dabf5" },
-                  "&.Mui-focused fieldset": { borderColor: "#007bff" },
-                },
-              }}
+              sx={textFieldStyles}
             />
+            <FormControl fullWidth sx={textFieldStyles}>
+              <InputLabel id="role-label" sx={{ color: "gray" }}>
+                Role
+              </InputLabel>
+              <Select
+                labelId="role-label"
+                id="role"
+                name="role"
+                value={user.role}
+                label="Role"
+                onChange={handleInputChange}
+                sx={{ color: "white" }}
+              >
+                <MenuItem value="student">Student</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               type="submit"
               variant="contained"
@@ -110,12 +153,6 @@ const Login = () => {
             >
               Login
             </Button>
-            <Typography color="gray" variant="body2" align="center" mt={2}>
-              Don't have an account?{" "}
-              <Link href="/signup" underline="hover" sx={{ color: "#4dabf5" }}>
-                Sign Up
-              </Link>
-            </Typography>
           </Stack>
         </Paper>
       </Container>
