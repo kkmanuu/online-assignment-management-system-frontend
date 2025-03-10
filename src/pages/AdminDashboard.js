@@ -8,7 +8,6 @@ const AdminDashboard = () => {
       <Typography variant="h4" gutterBottom>
         Admin Dashboard
       </Typography>
-      {/* Add admin-specific content here */}
     </DashboardLayout>
   );
 };
