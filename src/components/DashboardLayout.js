@@ -1,7 +1,16 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { 
-  Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Divider 
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Divider,
 } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PeopleIcon from "@mui/icons-material/People";
@@ -24,16 +33,32 @@ const DashboardLayout = ({ children }) => {
     {
       text: "Manage Assignments",
       items: [
-        { text: "View All Assignments", icon: <VisibilityIcon />, path: "/admin/assignments" },
-        { text: "Create New Assignment", icon: <AddIcon />, path: "/admin/assignments/create" },
-        { text: "View Submissions", icon: <CheckCircleIcon />, path: "/admin/submissions" },
+        {
+          text: "View All Assignments",
+          icon: <VisibilityIcon />,
+          path: "/admin/assignments",
+        },
+        {
+          text: "Create New Assignment",
+          icon: <AddIcon />,
+          path: "/admin/assignments/create",
+        },
+        {
+          text: "View Submissions",
+          icon: <CheckCircleIcon />,
+          path: "/admin/submissions",
+        },
       ],
     },
     {
       text: "Manage Students",
       items: [
         { text: "Add Student", icon: <AddIcon />, path: "/admin/students/add" },
-        { text: "View Students", icon: <SchoolIcon />, path: "/admin/students" },
+        {
+          text: "View Students",
+          icon: <SchoolIcon />,
+          path: "/admin/students",
+        },
       ],
     },
     { text: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
@@ -44,18 +69,33 @@ const DashboardLayout = ({ children }) => {
     {
       text: "Assignments",
       items: [
-        { text: "View Assignments", icon: <VisibilityIcon />, path: "/student/assignments" },
-        { text: "Submit Assignment", icon: <AssignmentIcon />, path: "/student/assignments/submit" },
+        {
+          text: "View Assignments",
+          icon: <VisibilityIcon />,
+          path: "/student/assignments",
+        },
+        {
+          text: "Submit Assignment",
+          icon: <AssignmentIcon />,
+          path: "/student/assignments/submit",
+        },
       ],
     },
     {
       text: "Submissions",
-      items: [{ text: "My Submissions", icon: <CheckCircleIcon />, path: "/student/submissions" }],
+      items: [
+        {
+          text: "My Submissions",
+          icon: <CheckCircleIcon />,
+          path: "/student/submissions",
+        },
+      ],
     },
     { text: "Settings", icon: <SettingsIcon />, path: "/student/settings" },
   ];
 
-  const sidebarItems = user?.role === "admin" ? adminSidebarItems : studentSidebarItems;
+  const sidebarItems =
+    user?.role === "admin" ? adminSidebarItems : studentSidebarItems;
 
   return (
     <Box sx={{ display: "flex", height: "100vh", bgcolor: "#f5f5f5" }}>
@@ -74,7 +114,10 @@ const DashboardLayout = ({ children }) => {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: "bold", mx: "auto", color: "#FFEB3B" }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", mx: "auto", color: "#FFEB3B" }}
+          >
             {user?.role === "admin" ? "Admin Panel" : "Student Dashboard"}
           </Typography>
         </Toolbar>
@@ -84,7 +127,9 @@ const DashboardLayout = ({ children }) => {
           {sidebarItems.map((section, index) =>
             Array.isArray(section.items) ? (
               <Box key={index}>
-                <Typography sx={{ ml: 2, mt: 1, fontWeight: "bold", color: "#FFEB3B" }}>
+                <Typography
+                  sx={{ ml: 2, mt: 1, fontWeight: "bold", color: "#FFEB3B" }}
+                >
                   {section.text}
                 </Typography>
                 {section.items.map((item) => (
@@ -92,11 +137,16 @@ const DashboardLayout = ({ children }) => {
                     <ListItemButton
                       sx={{
                         "&:hover": { bgcolor: "#455A64" },
-                        bgcolor: location.pathname === item.path ? "#78909C" : "inherit",
+                        bgcolor:
+                          location.pathname === item.path
+                            ? "#78909C"
+                            : "inherit",
                       }}
                       onClick={() => navigate(item.path)}
                     >
-                      <ListItemIcon sx={{ color: "#FFEB3B" }}>{item.icon}</ListItemIcon>
+                      <ListItemIcon sx={{ color: "#FFEB3B" }}>
+                        {item.icon}
+                      </ListItemIcon>
                       <ListItemText primary={item.text} />
                     </ListItemButton>
                   </ListItem>
@@ -108,11 +158,16 @@ const DashboardLayout = ({ children }) => {
                 <ListItemButton
                   sx={{
                     "&:hover": { bgcolor: "#455A64" },
-                    bgcolor: location.pathname === section.path ? "#78909C" : "inherit",
+                    bgcolor:
+                      location.pathname === section.path
+                        ? "#78909C"
+                        : "inherit",
                   }}
                   onClick={() => navigate(section.path)}
                 >
-                  <ListItemIcon sx={{ color: "#FFEB3B" }}>{section.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ color: "#FFEB3B" }}>
+                    {section.icon}
+                  </ListItemIcon>
                   <ListItemText primary={section.text} />
                 </ListItemButton>
               </ListItem>
